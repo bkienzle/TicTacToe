@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TicTacToe
 {
@@ -12,6 +8,7 @@ namespace TicTacToe
         public int WinRecord { get; set; }
         public int LossRecord { get; set; }
         public int TieRecord { get; set; }
+        public int TeamNumber { get; set; }
 
         public void GetName()
         {

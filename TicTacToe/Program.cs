@@ -1,20 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TicTacToe
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Player player = new Player();
-            player.GetName();
-            player.ShowRecord();
             Game TicTacToe = new Game();
-            TicTacToe.DrawBoardState();
+            player.GetName();
+            player.TeamNumber = TicTacToe.GetTeam();
+
+            while (TicTacToe.IsPlaying)
+            {
+                Console.Clear();
+                player.ShowRecord();
+                TicTacToe.PlayerTurn(player.TeamNumber);
+            }
 
             Console.ReadKey();
         }
