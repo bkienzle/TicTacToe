@@ -13,7 +13,7 @@ namespace TicTacToe
         public int LossRecord { get; set; }
         public int TieRecord { get; set; }
 
-        public void setName()
+        public void GetName()
         {
             Console.Write("Please enter your name: ");
             Name = Console.ReadLine();
