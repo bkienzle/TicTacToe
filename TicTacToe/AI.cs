@@ -1,8 +1,55 @@
-﻿namespace TicTacToe
+﻿using System;
+
+namespace TicTacToe
 {
     static class AI
     {
-        static int ObviousMove(int[,] GameState, int Team)
+        static int[,] GameState;
+        static string TranslatePosition(string Position)
+        {
+            switch (Position)
+            {
+                case "1":
+                    return "00";
+                case "2":
+                    return "01";
+                case "3":
+                    return "02";
+                case "4":
+                    return "10";
+                case "5":
+                    return "11";
+                case "6":
+                    return "12";
+                case "7":
+                    return "20";
+                case "8":
+                    return "21";
+                default:
+                    return "22";
+            }
+        }
+        static bool DoesStateExist(string Evaluate)
+        {
+            //this is going to take in a long string of comma seperated numbers and break them up and test them against the game state to see if all of the statements are true
+            //this is most likely more expensive, but it makes the code a lot more readable, imo.
+
+            //instead of something like this:
+            //if (GameState[0, 0] == (int)Game.Mark.Empty && GameState[0, 2] == (int)Game.Mark.Empty && GameState[2, 0] == (int)Game.Mark.Empty && GameState[0, 1] == Team && GameState[1, 0] == Team) return 1; // 1 3 5 empty, 2 4 our markers
+            //
+            //we can just do DoesStateExist("10,30,50,2{0},4{0}", TeamString);
+            
+            foreach (string ThisEvaluate in Evaluate.Split(','))
+            {
+                string xy = TranslatePosition(ThisEvaluate.Substring(0, 1));
+                int x = Int32.Parse(xy.Substring(0, 1));
+                int y = Int32.Parse(xy.Substring(1, 1));
+                int ValueToEvaluateAgainst = Int32.Parse(ThisEvaluate.Substring(1, 1));
+                if (GameState[x, y] != ValueToEvaluateAgainst) return false;
+            }
+            return true;
+        }
+        static int ObviousMove(int Team)
         {
             for (int i = 0; i <= 2; i++)
             {
@@ -24,7 +71,7 @@
 
             return 0;
         }
-        static int Forks(int[,] GameState, int Team)
+        static int Forks(int Team)
         {
             //corner spots first, since we only need to do those once.  see the tic tac toe diagram if the numbers dont make sense.
             if (GameState[0, 0] == (int)Game.Mark.Empty && GameState[0, 2] == (int)Game.Mark.Empty && GameState[2, 0] == (int)Game.Mark.Empty && GameState[0, 1] == Team && GameState[1, 0] == Team) return 1; // 1 3 5 empty, 2 4 our markers
@@ -68,8 +115,9 @@
 
             return 0;
         }
-        public static int FindBestMove(int[,] GameState, int EnemyTeamMarker)
+        public static int FindBestMove(int[,] TempGameState, int EnemyTeamMarker)
         {
+            GameState = TempGameState;
             int HumanTeamMarker = Game.GetEnemyTeam(EnemyTeamMarker);
             int TakenCells = 0;
             int CurrentBestMove = 0;
@@ -92,16 +140,16 @@
 
             // From here on out I'm using the strategy used in Newell and Simon's 1972 Tic Tac Toe program.
 
-            CurrentBestMove = ObviousMove(GameState, EnemyTeamMarker); // Play obvious winning moves
+            CurrentBestMove = ObviousMove(EnemyTeamMarker); // Play obvious winning moves
             if (CurrentBestMove != 0) return CurrentBestMove;
 
-            CurrentBestMove = ObviousMove(GameState, HumanTeamMarker); // Block obvious winning opponent moves
+            CurrentBestMove = ObviousMove(HumanTeamMarker); // Block obvious winning opponent moves
             if (CurrentBestMove != 0) return CurrentBestMove;
 
-            CurrentBestMove = Forks(GameState, EnemyTeamMarker); // Looks for ways to create forks
+            CurrentBestMove = Forks(EnemyTeamMarker); // Looks for ways to create forks
             if (CurrentBestMove != 0) return CurrentBestMove;
 
-            CurrentBestMove = Forks(GameState, HumanTeamMarker); // Looks for fork opportunities to block
+            CurrentBestMove = Forks(HumanTeamMarker); // Looks for fork opportunities to block
             if (CurrentBestMove != 0) return CurrentBestMove;
 
             if (GameState[1, 1] == (int)Game.Mark.Empty) return 5; // play in the center if it's available
