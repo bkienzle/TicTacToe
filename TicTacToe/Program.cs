@@ -6,16 +6,38 @@ namespace TicTacToe
     {
         static void Main()
         {
-            Player player = new Player();
+            Player human = new Player();
             Game TicTacToe = new Game();
-            player.GetName();
-            player.TeamNumber = TicTacToe.GetTeam();
-
+            human.GetName();
+            human.TeamNumber = TicTacToe.GetTeam();
+            
+            
             while (TicTacToe.IsPlaying)
             {
-                Console.Clear();
-                player.ShowRecord();
-                TicTacToe.PlayerTurn(player.TeamNumber);
+                if (TicTacToe.HasWonCoinToss()) TicTacToe.IsPlayersTurn = true;
+                while (!TicTacToe.IsMatchOver)
+                {
+                    Console.Clear();
+                    human.ShowRecord();
+                    TicTacToe.DoTurn(human.TeamNumber);
+                    int CurrentGameState = TicTacToe.EvaluateGameState();
+                    if (CurrentGameState != (int)Game.TurnResult.Ongoing) {
+                        switch (CurrentGameState)
+                        {
+                            case (int)Game.TurnResult.Tied:
+                                human.TieRecord++;
+                                break;
+                            case (int)Game.TurnResult.Lost:
+                                human.LossRecord++;
+                                break;
+                            case (int)Game.TurnResult.Won:
+                                human.WinRecord++;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
             }
 
             Console.ReadKey();

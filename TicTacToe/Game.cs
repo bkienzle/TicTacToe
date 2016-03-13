@@ -11,9 +11,17 @@ namespace TicTacToe
             X = 1,
             O = 2,
         }
+        public enum TurnResult
+        {
+            Ongoing,
+            Won,
+            Lost,
+            Tied,
+        }
         public int[,] GameState = new int[3, 3];
         public bool IsPlaying = true;
         public bool IsPlayersTurn { get; set; }
+        public bool IsMatchOver { get; set; }
 
         string MarkValueToString(int CellValue)
         {
@@ -47,7 +55,7 @@ namespace TicTacToe
             Result.Insert(0, " ", 15);
             return Result.ToString();
         }
-        public void DrawBoardState()
+        void DrawBoardState()
         {
             Console.WriteLine();
             Console.WriteLine(new string(' ',15) + "Board State" + new string(' ', 15) + "Cell Numbers");
@@ -59,29 +67,35 @@ namespace TicTacToe
             }
             Console.WriteLine();
         }
-        public int GetGameStateCellValue(int Position)
+        int GetGameStateCellValue(int Position)
         {
             return GameState[((Position - 1) / 3), ((Position - 1) % 3)];
         }
-        public void SetGameStateCellValue(int Position, int CellValue)
+        void SetGameStateCellValue(int Position, int CellValue)
         {
-            GameState[((Position - 1) / 3), ((Position - 1) % 3)] = CellValue;
+            if (IsPositionValid(Position)) GameState[((Position - 1) / 3), ((Position - 1) % 3)] = CellValue;
         }
-        public bool IsPositionValid(int Position)
+        bool IsPositionValid(int Position)
         {
             if (Position != 0 && GetGameStateCellValue(Position) == (int)Mark.Empty) return true;
             return false;
         }
-        public void PlaceMark(int Position, int Team)
+        public void DoTurn(int Team)
         {
-            if (IsPositionValid(Position)) SetGameStateCellValue(Position, Team);
-        }
-        public void PlayerTurn(int Team)
-        {
-            DrawBoardState();
-            Console.Write("Please select a cell to place your{0}in: ", MarkValueToString(Team).ToString());
-            char UserChoice = Console.ReadKey().KeyChar;
-            if (Char.IsDigit(UserChoice))PlaceMark(int.Parse(UserChoice.ToString()), Team);
+            if (IsPlayersTurn)
+            {
+                DrawBoardState();
+                Console.Write("Please select a cell to place your{0}in: ", MarkValueToString(Team).ToString());
+                char UserChoice = Console.ReadKey().KeyChar;
+                if (Char.IsDigit(UserChoice)) SetGameStateCellValue(int.Parse(UserChoice.ToString()), Team);
+                IsPlayersTurn = false;
+            }
+            else
+            {
+                if (Team == (int)Mark.X) ComputerTurn((int)Mark.O);
+                else ComputerTurn((int)Mark.X);
+                IsPlayersTurn = true;
+            }
         }
         public int GetTeam()
         {
@@ -89,6 +103,24 @@ namespace TicTacToe
             string Team = Console.ReadKey().KeyChar.ToString();
             if (Team.ToLower() == "o") return (int)Mark.O;
             return (int)Mark.X;
+        }
+        public int EvaluateGameState()
+        {
+            return (int)TurnResult.Ongoing;
+        }
+        void MatchFinished()
+        {
+            IsMatchOver = true;
+
+            Console.Write("Play Again? ");
+            if (Console.ReadKey().KeyChar.ToString().ToLower() == "n")
+            {
+                IsPlaying = false;
+            }
+        }
+        void ComputerTurn(int EnemyTeam)
+        {
+
         }
     }
 }
