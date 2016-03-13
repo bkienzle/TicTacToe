@@ -87,7 +87,7 @@ namespace TicTacToe
         }
         static bool DoesStateExist(string Evaluate)
         {
-            //this is going to take in a long string of comma seperated numbers and break them up and test them against the game state to see if all of the statements are true
+            //this is going to take in a string of comma seperated numbers and break them up and test them against the game state to see if all of the statements are true
             //this is most likely more expensive, but it makes the code a lot more readable, imo.
 
             //instead of something like this:
