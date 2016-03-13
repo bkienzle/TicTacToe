@@ -51,19 +51,19 @@
             //these last ones need 5 to be an option for us, since that will be our return value if we get a hit.
             if (GameState[1,1] == (int)Game.Mark.Empty)
             {
-                if (GameState[2, 1] == (int)Game.Mark.Empty && GameState[2, 2] == (int)Game.Mark.Empty && GameState[0, 0] == Team && GameState[0, 1] == Team) return 8; // 8 9 empty, 1 2 our markers
-                if (GameState[2, 0] == (int)Game.Mark.Empty && GameState[2, 2] == (int)Game.Mark.Empty && GameState[0, 1] == Team && GameState[0, 2] == Team) return 8; // 7 8 empty, 2 3 our markers
-                if (GameState[1, 0] == (int)Game.Mark.Empty && GameState[2, 0] == (int)Game.Mark.Empty && GameState[0, 2] == Team && GameState[1, 2] == Team) return 8; // 4 7 empty, 3 6 our markers
-                if (GameState[0, 0] == (int)Game.Mark.Empty && GameState[1, 0] == (int)Game.Mark.Empty && GameState[1, 2] == Team && GameState[2, 2] == Team) return 8; // 1 4 empty, 6 9 our markers
-                if (GameState[0, 0] == (int)Game.Mark.Empty && GameState[0, 1] == (int)Game.Mark.Empty && GameState[2, 1] == Team && GameState[2, 2] == Team) return 8; // 1 2 empty, 8 9 our markers
-                if (GameState[0, 1] == (int)Game.Mark.Empty && GameState[0, 2] == (int)Game.Mark.Empty && GameState[2, 0] == Team && GameState[2, 1] == Team) return 8; // 2 3 empty, 7 8 our markers
-                if (GameState[0, 2] == (int)Game.Mark.Empty && GameState[1, 2] == (int)Game.Mark.Empty && GameState[1, 0] == Team && GameState[2, 0] == Team) return 8; // 3 6 empty, 4 7 our markers
-                if (GameState[1, 2] == (int)Game.Mark.Empty && GameState[2, 2] == (int)Game.Mark.Empty && GameState[0, 0] == Team && GameState[1, 0] == Team) return 8; // 6 9 empty, 1 4 our markers
+                if (GameState[2, 1] == (int)Game.Mark.Empty && GameState[2, 2] == (int)Game.Mark.Empty && GameState[0, 0] == Team && GameState[0, 1] == Team) return 5; // 8 9 empty, 1 2 our markers
+                if (GameState[2, 0] == (int)Game.Mark.Empty && GameState[2, 2] == (int)Game.Mark.Empty && GameState[0, 1] == Team && GameState[0, 2] == Team) return 5; // 7 8 empty, 2 3 our markers
+                if (GameState[1, 0] == (int)Game.Mark.Empty && GameState[2, 0] == (int)Game.Mark.Empty && GameState[0, 2] == Team && GameState[1, 2] == Team) return 5; // 4 7 empty, 3 6 our markers
+                if (GameState[0, 0] == (int)Game.Mark.Empty && GameState[1, 0] == (int)Game.Mark.Empty && GameState[1, 2] == Team && GameState[2, 2] == Team) return 5; // 1 4 empty, 6 9 our markers
+                if (GameState[0, 0] == (int)Game.Mark.Empty && GameState[0, 1] == (int)Game.Mark.Empty && GameState[2, 1] == Team && GameState[2, 2] == Team) return 5; // 1 2 empty, 8 9 our markers
+                if (GameState[0, 1] == (int)Game.Mark.Empty && GameState[0, 2] == (int)Game.Mark.Empty && GameState[2, 0] == Team && GameState[2, 1] == Team) return 5; // 2 3 empty, 7 8 our markers
+                if (GameState[0, 2] == (int)Game.Mark.Empty && GameState[1, 2] == (int)Game.Mark.Empty && GameState[1, 0] == Team && GameState[2, 0] == Team) return 5; // 3 6 empty, 4 7 our markers
+                if (GameState[1, 2] == (int)Game.Mark.Empty && GameState[2, 2] == (int)Game.Mark.Empty && GameState[0, 0] == Team && GameState[1, 0] == Team) return 5; // 6 9 empty, 1 4 our markers
 
-                if (GameState[2, 0] == (int)Game.Mark.Empty && GameState[2, 2] == (int)Game.Mark.Empty && GameState[0, 0] == Team && GameState[0, 2] == Team) return 8; // 7 9 empty, 1 3 our markers
-                if (GameState[0, 0] == (int)Game.Mark.Empty && GameState[0, 2] == (int)Game.Mark.Empty && GameState[2, 0] == Team && GameState[2, 2] == Team) return 8; // 1 3 empty, 7 9 our markers
-                if (GameState[0, 0] == (int)Game.Mark.Empty && GameState[2, 0] == (int)Game.Mark.Empty && GameState[0, 2] == Team && GameState[2, 2] == Team) return 8; // 1 7 empty, 3 9 our markers
-                if (GameState[0, 2] == (int)Game.Mark.Empty && GameState[2, 2] == (int)Game.Mark.Empty && GameState[0, 0] == Team && GameState[2, 0] == Team) return 8; // 3 9 empty, 1 7 our markers
+                if (GameState[2, 0] == (int)Game.Mark.Empty && GameState[2, 2] == (int)Game.Mark.Empty && GameState[0, 0] == Team && GameState[0, 2] == Team) return 5; // 7 9 empty, 1 3 our markers
+                if (GameState[0, 0] == (int)Game.Mark.Empty && GameState[0, 2] == (int)Game.Mark.Empty && GameState[2, 0] == Team && GameState[2, 2] == Team) return 5; // 1 3 empty, 7 9 our markers
+                if (GameState[0, 0] == (int)Game.Mark.Empty && GameState[2, 0] == (int)Game.Mark.Empty && GameState[0, 2] == Team && GameState[2, 2] == Team) return 5; // 1 7 empty, 3 9 our markers
+                if (GameState[0, 2] == (int)Game.Mark.Empty && GameState[2, 2] == (int)Game.Mark.Empty && GameState[0, 0] == Team && GameState[2, 0] == Team) return 5; // 3 9 empty, 1 7 our markers
             }
 
             return 0;
