@@ -55,7 +55,19 @@ namespace TicTacToe
             Result.Insert(0, " ", 15);
             return Result.ToString();
         }
-        void DrawBoardState()
+        public void InitializeGameState()
+        {
+            IsMatchOver = false;
+            if (HasWonCoinToss()) IsPlayersTurn = true;
+            for (int x = 0; x <= 2; x++)
+            {
+                for (int y = 0; y <= 2; y++)
+                {
+                    GameState[x, y] = (int)Mark.Empty;
+                }
+            }
+        }
+        public void DrawBoardState()
         {
             Console.WriteLine();
             Console.WriteLine(new string(' ',15) + "Board State" + new string(' ', 15) + "Cell Numbers");
@@ -92,8 +104,7 @@ namespace TicTacToe
             }
             else
             {
-                if (Team == (int)Mark.X) ComputerTurn((int)Mark.O);
-                else ComputerTurn((int)Mark.X);
+                ComputerTurn(GetEnemyTeam(Team));
                 IsPlayersTurn = true;
             }
         }
@@ -104,14 +115,41 @@ namespace TicTacToe
             if (Team.ToLower() == "o") return (int)Mark.O;
             return (int)Mark.X;
         }
-        public int EvaluateGameState()
+        int GetEnemyTeam(int Team)
         {
+            if (Team == (int)Mark.X) return (int)Mark.O;
+            return (int)Mark.X;
+        }
+        bool IsGameWon(int Team)
+        {
+            for (int i = 0; i <= 2; i++)
+            {
+                if (GameState[i, 0] == Team && GameState[i, 1] == Team && GameState[i, 2] == Team) return true;
+                if (GameState[0, i] == Team && GameState[1, i] == Team && GameState[2, i] == Team) return true;
+            }
+            if (GameState[0, 0] == Team && GameState[1, 1] == Team && GameState[2, 2] == Team) return true;
+            if (GameState[0, 2] == Team && GameState[1, 1] == Team && GameState[2, 0] == Team) return true;
+            return false;
+        }
+        bool IsTie()
+        {
+            foreach(int CurrentCell in GameState)
+            {
+                if (CurrentCell == (int)Mark.Empty) return false;
+            }
+            return true;
+        }
+        public int EvaluateGameState(int Team)
+        {
+            if (IsGameWon(Team)) return (int)TurnResult.Won;
+            if (IsGameWon(GetEnemyTeam(Team))) return (int)TurnResult.Lost;
+            if (IsTie()) return (int)TurnResult.Tied;
             return (int)TurnResult.Ongoing;
         }
-        void MatchFinished()
+        public void MatchFinished()
         {
             IsMatchOver = true;
-
+            Console.WriteLine();
             Console.Write("Play Again? ");
             if (Console.ReadKey().KeyChar.ToString().ToLower() == "n")
             {
