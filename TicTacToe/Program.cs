@@ -35,7 +35,7 @@ namespace TicTacToe
                                 Console.WriteLine("You lose.");
                                 human.LossRecord++;
                                 break;
-                            case (int)Game.TurnResult.Won:
+                            case (int)Game.TurnResult.Won: //this is basically never going to happen.
                                 Console.WriteLine("You win.");
                                 human.WinRecord++;
                                 break;
